@@ -72,6 +72,8 @@
 <script>
 import DataService from "../services/DataService";
 
+
+
 export default {
   name: "todo-list",
   data() {
@@ -97,6 +99,7 @@ export default {
     retrievetodo() {
       DataService.getAll()
         .then((response) => {
+          console.log(response);
           this.todo = response.data.map(this.getDisplaytodo);
           console.log(response.data);
         })
@@ -105,6 +108,21 @@ export default {
         });
     },
 
+    /* Error de nao ser array:
+
+    retrievetodo() {
+  DataService.getAll()
+    .then((response) => {
+      this.todo = Array.isArray(response.data) ? response.data : [];
+      console.log(response.data);
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+},
+
+
+    */
 
 
     refreshList() {
@@ -162,14 +180,24 @@ export default {
 
 
     getDisplaytodo(todo) {
-      return {
-        id: todo.id,
-        title: todo.title.length > 30 ? todo.title.substr(0, 10) + "..." : todo.title,
-        priority: todo.priority,
-        completed: todo.completed,
-        createdat: todo.createdat.slice(0,10),
-      };
-    },
+  if (todo.title) {
+    return {
+      id: todo.id,
+      title: todo.title.length > 30 ? todo.title.substr(0, 10) + "..." : todo.title,
+      priority: todo.priority,
+      completed: todo.completed,
+      createdat: (todo.createdat || "09/25/2025").slice(0, 10),
+    };
+  } else {
+    return {
+      id: todo.id,
+      title: "No title available", // Defina um valor padrão ou uma mensagem de erro aqui
+      priority: todo.priority,
+      completed: todo.completed,
+      createdat: (todo.createdat || "09/25/2025").slice(0, 10),
+    };
+  }
+},
    
       redirectToCreate() {  //show difference between this.$router.push and window.location.href
       this.$router.push("/create")

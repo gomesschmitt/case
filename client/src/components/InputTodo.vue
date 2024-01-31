@@ -56,7 +56,7 @@ export default {
         id: null,
         title: "",
         priority: "",
-        completed: false,
+        completed: true,
       },
       options: ['High', 'Medium', 'Low'],
       submitted: false,

@@ -1,24 +1,26 @@
 import http from "../http-common";
 
+
 class DataService {
   getAll() {
     return http.get("/toDos");
   }
 
   get(id) {
-    return http.get(`/toDo/${id}`); //nao tinha o s
+    return http.get(`/toDos/${id}`); //nao tinha o s
   }
 
-  create(data) {
-    return http.post("/toDo", data); //nao tinha o s
+  async create(data) {
+    console.log(data)
+    return await http.post("/toDos", data); //nao tinha o s
   }
 
   update(id, data) {
-    return http.patch(`/toDo/${id}`, data); //nao tinha o s
+    return http.patch(`/toDos/${id}`, data); //nao tinha o s
   }
 
   delete(id) {
-    return http.delete(`/toDo/${id}`); //nao tinha o s
+    return http.delete(`/toDos/${id}`); //nao tinha o s
   }
 
 }
